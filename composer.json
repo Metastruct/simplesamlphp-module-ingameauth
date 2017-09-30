@@ -1,0 +1,9 @@
+{
+    "name": "metastruct/simplesamlphp-module-ingameauth",
+    "description": "A SimpleSAMLphp module adding support for gameserver-provided authentication protocol.",
+    "type": "simplesamlphp-module",
+    "require": {
+        "simplesamlphp/composer-module-installer": "~1.0"
+    }
+}
+
