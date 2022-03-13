@@ -1,30 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
+namespace SimpleSAML\Module\ingameauth\Auth\Process;
+
+use SimpleSAML\Assert\Assert;
+use SimpleSAML\Auth;
+use SimpleSAML\Module;
+use SimpleSAML\Utils;
+
 /**
  * A simple processing filter for testing that redirection works as it should.
  *
  */
-class sspmod_ingameauth_Auth_Process_RedirectTest extends SimpleSAML_Auth_ProcessingFilter {
+class RedirectTest extends Auth\ProcessingFilter
+{
+    /**
+     * Initialize processing of the redirect test.
+     *
+     * @param array &$state  The state we should update.
+     */
+    public function process(array &$state): void
+    {
+        Assert::keyExists($state, 'Attributes');
 
+        // To check whether the state is saved correctly
+        $state['Attributes']['RedirectTest1'] = ['OK'];
 
-	/**
-	 * Initialize processing of the redirect test.
-	 *
-	 * @param array &$state  The state we should update.
-	 */
-	public function process(&$state) {
-		assert('is_array($state)');
-		assert('array_key_exists("Attributes", $state)');
+        // Save state and redirect
+        $id = Auth\State::saveState($state, 'ingameauth:redirectfilter-test');
+        $url = Module::getModuleURL('ingameauth/redirecttest');
 
-		/* To check whether the state is saved correctly. */
-		$state['Attributes']['RedirectTest1'] = array('OK');
-
-		/* Save state and redirect. */
-		$id = SimpleSAML_Auth_State::saveState($state, 'ingameauth:redirectfilter-test');
-		$url = SimpleSAML_Module::getModuleURL('ingameauth/redirecttest.php');
-		SimpleSAML_Utilities::redirectTrustedURL($url, array('StateId' => $id));
-	}
-
+        $httpUtils = new Utils\HTTP();
+        $httpUtils->redirectTrustedURL($url, ['StateId' => $id]);
+    }
 }
-
-?>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>ingameauth login page</title>
+	</head>
+	<body>
+		<h1>ingameauth login page</h1>
+		Please wait a few seconds while we redirect you...
+		<form method="post" id="theform" action="?">
+			<input type="hidden" name="authtkn" id="authtkn" value="">
+			<input type="hidden" name="ReturnTo" value="{{ returnTo|escape('html') }}">
+			<p><input type="submit" id="thesubmit" value="Log in"></p>
+		</form>
+{% if badUserPass == true %}
+		<p>!!! ingame authentication fail? !!!</p>
+{% endif %}
+	</body>
+
+
+<script type="text/javascript">
+	function OnAuthToken(dat) {
+		console.log("OnAuthToken " + (dat ? ("with data: len=" + dat.length) : "without data"));
+		var form = document.getElementById("theform");
+		var authtkn = document.getElementById("authtkn");
+		if (dat) {
+			authtkn.value = dat;
+		}
+		form.submit();
+		var submit = document.getElementById("thesubmit");
+		submit.disabled = true;
+		if (dat) {
+			submit.value = "Trying to use ingame auth token...";
+		} else {
+			submit.value = "Redirecting to steam auth...";
+		}
+	}
+	if ((typeof gmod != 'undefined') && (typeof gmod.reqtoken != 'undefined')) {
+		gmod.reqtoken();
+	} else {
+		console.log("skipping ingameauth...");
+		OnAuthToken(false);
+	}
+
+</script>
+
+
+</html>

@@ -1,0 +1,9 @@
+ingameauth-authpage:
+    path:       /authpage
+    defaults:   { _controller: 'SimpleSAML\Module\ingameauth\Controller\InGameAuth::authpage' }
+ingameauth-redirecttest:
+    path:       /redirecttest
+    defaults:   { _controller: 'SimpleSAML\Module\ingameauth\Controller\InGameAuth::redirecttest' }
+ingameauth-resume:
+    path:       /resume
+    defaults:   { _controller: 'SimpleSAML\Module\ingameauth\Controller\InGameAuth::resume' }
