@@ -123,7 +123,9 @@ class InGameAuth
             //if (!isset($authtkn) || !$authtkn) {
                // NOPE $badUserPass = true;
             //} else {
-                return new RunnableResponse([$httpUtils, 'redirectTrustedURL'], [$returnTo]);
+                return new RunnableResponse([$httpUtils, 'redirectTrustedURL'], [$returnTo,array(
+                    'authtkn' => $authtkn
+                )]);
             //}
         }
 
