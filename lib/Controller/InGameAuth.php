@@ -87,7 +87,7 @@ class InGameAuth
          * Note that we don't actually validate the user in this example. This page
          * just serves to make the example work out of the box.
          */
-        $returnTo = $request->request->get('ReturnTo');
+        $returnTo = $request->get('ReturnTo');
         if ($returnTo === null) {
             throw new Error\Exception('Missing ReturnTo parameter.');
         }
@@ -120,11 +120,11 @@ class InGameAuth
         if ($request->getMethod() === 'POST') {
             $authtkn = $request->request->get('authtkn');
 
-            if (!isset($authtkn) || !$authtkn) {
+            //if (!isset($authtkn) || !$authtkn) {
                // NOPE $badUserPass = true;
-            } else {
+            //} else {
                 return new RunnableResponse([$httpUtils, 'redirectTrustedURL'], [$returnTo]);
-            }
+            //}
         }
 
         // if we get this far, we need to show the login page to the user
